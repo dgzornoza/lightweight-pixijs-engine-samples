@@ -46,6 +46,6 @@
     },
     "dependencies": {
         "es6-shim": "~0.35.3",
-        "lightweight-pixijs-engine": "~0.2.2"
+        "lightweight-pixijs-engine": "~0.2.3"
     }
 }

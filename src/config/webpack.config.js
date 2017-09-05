@@ -18,7 +18,8 @@ var plugins = [
     }),
     new HtmlWebpackPlugin({
         template: baseUrl + "/app/index.html"
-    })
+    }),
+    new ExtractTextPlugin("styles.css"),
 ];
 
 // environment options
@@ -38,7 +39,11 @@ var config = {
     devtool: "source-map",
     output: {
         path: path.join(baseUrl, "/../dist"),
-        filename: "[name].js"
+        filename: "[name].js",
+        devtoolModuleFilenameTemplate: function(info) {
+            // return "file:///" + info.absoluteResourcePath;
+            return "../" + info.resourcePath;
+        }
     },
     module: {
         rules: [{
@@ -66,12 +71,9 @@ var config = {
         ]
     },
     resolve: {
-        alias: {
-            "lightweight-pixi-engine": "lib/backbone-1.1.0"
-        },
         extensions: [".ts", ".tsx", ".js", ".jsx"],
         modules: [
-            path.resolve(__dirname, "/.."),
+            path.resolve(__dirname, "/../.."),
             "node_modules"
         ]
     },

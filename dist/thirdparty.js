@@ -1,11 +1,11 @@
-webpackJsonp([0],{
+webpackJsonp([1],{
 
-/***/ 2:
+/***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(true)
-		module.exports = factory(__webpack_require__(1));
+		module.exports = factory(__webpack_require__(2));
 	else if(typeof define === 'function' && define.amd)
 		define("lightweight-pixijs-engine", ["es6-shim"], factory);
 	else if(typeof exports === 'object')
@@ -11534,7 +11534,7 @@ var PixiEngine = (function () {
     /** Default constructor */
     function PixiEngine() {
         this._rootContainer = new PIXI.Container();
-        this._state = EnumEngineStates.RUNNING;
+        this._state = EnumEngineStates.PAUSED;
     }
     Object.defineProperty(PixiEngine.prototype, "renderer", {
         get: function () {
@@ -11609,12 +11609,10 @@ var PixiEngine = (function () {
         this._charm = new pixijs_charm_1.Charm(PIXI);
         // initialize sceneManager
         scene_manager_1.sceneManagerInstance.initialize(this._rootContainer);
-        // set mainscene
-        scene_manager_1.sceneManagerInstance.loadAndCreateScene(this._config.mainScene).then(function (mainScene) {
-            scene_manager_1.sceneManagerInstance.replaceScene(mainScene);
-            // start main loop
-            _this._mainLoop();
-        });
+        // start main loop
+        this._mainLoop();
+        // play engine
+        this._state = EnumEngineStates.RUNNING;
     };
     PixiEngine.prototype._mainLoop = function () {
         var _this = this;
@@ -43935,7 +43933,7 @@ exports.Helpers = Helpers;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 // LIGHTWEIGHT PIXI ENGINE
-__webpack_require__(2);
+__webpack_require__(0);
 // Other thirdparty libraries
 // You can import js, ts, css, sass, ...
 

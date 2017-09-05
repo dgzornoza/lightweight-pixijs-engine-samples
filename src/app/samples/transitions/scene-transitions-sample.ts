@@ -1,22 +1,22 @@
-import { IKeyValueMap } from "lightweight-pixi-engine";
-import { EnumDirections, ContainerTransitionSlide, ContainerTransitionFadeIn, ContainerTransitionFadeOut } from "lightweight-pixi-engine";
-import { pixiEngineInstance } from "lightweight-pixi-engine";
+import { IKeyValueMap } from "lightweight-pixijs-engine";
+import { EnumDirections, ContainerTransitionSlide, ContainerTransitionFadeIn, ContainerTransitionFadeOut } from "lightweight-pixijs-engine";
+import { pixiEngineInstance } from "lightweight-pixijs-engine";
 
 const RESOURCE_PATHS: IKeyValueMap<string, string>[] = [
-    { key: "BG_SCENE_1", value: "content/img/samples/sceneTransitions/bg-scene-1.jpg" },
-    { key: "BG_SCENE_2", value: "content/img/samples/sceneTransitions/bg-scene-2.jpg" },
-    { key: "BG_SCENE_3", value: "content/img/samples/sceneTransitions/bg-scene-3.jpg" },
-    { key: "BG_SCENE_4", value: "content/img/samples/sceneTransitions/bg-scene-4.jpg" },
-    { key: "BG_SCENE_5", value: "content/img/samples/sceneTransitions/bg-scene-5.jpg" },
-    { key: "BG_SCENE_6", value: "content/img/samples/sceneTransitions/bg-scene-6.jpg" },
-    { key: "BG_SCENE_7", value: "content/img/samples/sceneTransitions/bg-scene-7.jpg" },
-    { key: "BG_SCENE_8", value: "content/img/samples/sceneTransitions/bg-scene-8.jpg" },
-    { key: "BG_SCENE_9", value: "content/img/samples/sceneTransitions/bg-scene-9.jpg" },
-    { key: "BG_SCENE_10", value: "content/img/samples/sceneTransitions/bg-scene-10.jpg" },
-    { key: "BG_SCENE_11", value: "content/img/samples/sceneTransitions/bg-scene-11.jpg" },
-    { key: "BG_SCENE_12", value: "content/img/samples/sceneTransitions/bg-scene-12.jpg" },
-    { key: "BG_SCENE_13", value: "content/img/samples/sceneTransitions/bg-scene-13.jpg" },
-    { key: "BG_SCENE_14", value: "content/img/samples/sceneTransitions/bg-scene-14.jpg" }
+    { key: "BG_SCENE_1", value: "content/img/samples/scene-transitions/bg-scene-1.jpg" },
+    { key: "BG_SCENE_2", value: "content/img/samples/scene-transitions/bg-scene-2.jpg" },
+    { key: "BG_SCENE_3", value: "content/img/samples/scene-transitions/bg-scene-3.jpg" },
+    { key: "BG_SCENE_4", value: "content/img/samples/scene-transitions/bg-scene-4.jpg" },
+    { key: "BG_SCENE_5", value: "content/img/samples/scene-transitions/bg-scene-5.jpg" },
+    { key: "BG_SCENE_6", value: "content/img/samples/scene-transitions/bg-scene-6.jpg" },
+    { key: "BG_SCENE_7", value: "content/img/samples/scene-transitions/bg-scene-7.jpg" },
+    { key: "BG_SCENE_8", value: "content/img/samples/scene-transitions/bg-scene-8.jpg" },
+    { key: "BG_SCENE_9", value: "content/img/samples/scene-transitions/bg-scene-9.jpg" },
+    { key: "BG_SCENE_10", value: "content/img/samples/scene-transitions/bg-scene-10.jpg" },
+    { key: "BG_SCENE_11", value: "content/img/samples/scene-transitions/bg-scene-11.jpg" },
+    { key: "BG_SCENE_12", value: "content/img/samples/scene-transitions/bg-scene-12.jpg" },
+    { key: "BG_SCENE_13", value: "content/img/samples/scene-transitions/bg-scene-13.jpg" },
+    { key: "BG_SCENE_14", value: "content/img/samples/scene-transitions/bg-scene-14.jpg" }
 ];
 
 const SLIDE_DIRECTIONS: EnumDirections[] = [
