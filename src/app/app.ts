@@ -45,8 +45,7 @@ class App implements IApp {
         };
 
         pixiEngineInstance.initialize(config);
-        let mainScene: MainScene = pixiEngineInstance.sceneManager.createScene("samples/main-scene", MainScene) as MainScene;
-        pixiEngineInstance.sceneManager.replaceScene(mainScene);
+        pixiEngineInstance.sceneManager.createAndReplaceScene("samples/main-scene", MainScene);
     }
 
 

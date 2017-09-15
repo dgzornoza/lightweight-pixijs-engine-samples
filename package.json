@@ -31,6 +31,7 @@
     "devDependencies": {
         "@types/es6-shim": "~0.31.32",
         "@types/pixi.js": "~4.5.3",
+        "@types/webpack-env": "~1.13.0",
         "awesome-typescript-loader": "~3.2.3",
         "css-loader": "~0.28.6",
         "cross-env": "~5.0.5",
@@ -46,6 +47,9 @@
     },
     "dependencies": {
         "es6-shim": "~0.35.3",
-        "lightweight-pixijs-engine": "~0.2.3"
+        "lightweight-pixijs-engine": "~0.3.1",
+        "pixi.js": "~4.5.5",
+        "fpsmeter": "~0.3.1",
+        "pixijs-charm": "~0.1.4"
     }
 }
