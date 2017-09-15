@@ -1,5 +1,7 @@
 ﻿import { pixiEngineInstance, IPixiEngineConfiguration } from "lightweight-pixijs-engine";
+import { MainScene } from "./samples/main-scene";
 
+import "../content/css/reset.css";
 
 /** Interface for pixi main app */
 export interface IApp {
@@ -21,7 +23,7 @@ class App implements IApp {
     // MINIFIED_EXT: ".min",
     // DESIGN_RESOLUTION_WIDTH: "1920",
     // DESIGN_RESOLUTION_HEIGHT: "1280",
-    // BACKGROUND_COLOR: "0x000000",
+    // BACKGROUND_COLOR: "0x000000",P
     // MAIN_SCENE: "app/samples/mainSamples"
 
     private _init(): void {
@@ -38,16 +40,17 @@ class App implements IApp {
             backgroundColor: 0x000000,
             debugMode: true,
             height: 1280,
-            mainScene: "samples/mainScene",
+            scaleToWindow: true,
             width: 1920
         };
 
         pixiEngineInstance.initialize(config);
+        pixiEngineInstance.sceneManager.createAndReplaceScene("samples/main-scene", MainScene);
     }
 
 
 }
 
 
-// create main app instance for export
+// create main app instance
 export let application: IApp = new App();

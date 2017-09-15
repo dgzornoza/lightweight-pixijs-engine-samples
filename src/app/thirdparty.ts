@@ -1,4 +1,7 @@
 // LIGHTWEIGHT PIXI ENGINE
+import "pixi.js";
+import "fpsmeter";
+import "pixijs-charm";
 import "lightweight-pixijs-engine";
 
 

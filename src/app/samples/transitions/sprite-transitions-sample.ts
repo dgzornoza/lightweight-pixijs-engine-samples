@@ -1,24 +1,14 @@
-import { IKeyValueMap } from "lightweight-pixi-engine";
-import { EnumDirections, ContainerTransitionSlide, ContainerTransitionFadeIn, ContainerTransitionFadeOut }
-from "lightweight-pixi-engine";
-import { pixiEngineInstance } from "lightweight-pixi-engine";
+import { EnumDirections, ContainerTransitionSlide, ContainerTransitionFadeIn, ContainerTransitionFadeOut, IContainerTransition, IKeyValueMap,
+    pixiEngineInstance }
+    from "lightweight-pixijs-engine";
 
-const RESOURCE_PATHS: IKeyValueMap<string, string>[] = [
-    { key: "BG_SCENE_1", value: "content/img/samples/sceneTransitions/bg-scene-1.jpg" },
-    { key: "BG_SCENE_2", value: "content/img/samples/sceneTransitions/bg-scene-2.jpg" },
-    { key: "BG_SCENE_3", value: "content/img/samples/sceneTransitions/bg-scene-3.jpg" },
-    { key: "BG_SCENE_4", value: "content/img/samples/sceneTransitions/bg-scene-4.jpg" },
-    { key: "BG_SCENE_5", value: "content/img/samples/sceneTransitions/bg-scene-5.jpg" },
-    { key: "BG_SCENE_6", value: "content/img/samples/sceneTransitions/bg-scene-6.jpg" },
-    { key: "BG_SCENE_7", value: "content/img/samples/sceneTransitions/bg-scene-7.jpg" },
-    { key: "BG_SCENE_8", value: "content/img/samples/sceneTransitions/bg-scene-8.jpg" },
-    { key: "BG_SCENE_9", value: "content/img/samples/sceneTransitions/bg-scene-9.jpg" },
-    { key: "BG_SCENE_10", value: "content/img/samples/sceneTransitions/bg-scene-10.jpg" },
-    { key: "BG_SCENE_11", value: "content/img/samples/sceneTransitions/bg-scene-11.jpg" },
-    { key: "BG_SCENE_12", value: "content/img/samples/sceneTransitions/bg-scene-12.jpg" },
-    { key: "BG_SCENE_13", value: "content/img/samples/sceneTransitions/bg-scene-13.jpg" },
-    { key: "BG_SCENE_14", value: "content/img/samples/sceneTransitions/bg-scene-14.jpg" }
-];
+// load images with webpack
+let requireContext: __WebpackModuleApi.RequireContext = require.context("../../../content/img/scene-transitions/", true, /^\.\/.*\.jpg$/);
+/* tslint:disable no-require-imports */
+let resourcePaths: IKeyValueMap<string, string>[] = requireContext.keys().map((value: string, index: number) => {
+    return { key: `BG_SCENE_${index}`, value: `assets/src/content/img/scene-transitions/${value}` };
+});
+/* tslint:enable no-require-imports */
 
 const SLIDE_DIRECTIONS: EnumDirections[] = [
     EnumDirections.UP,
@@ -34,6 +24,7 @@ const SLIDE_DIRECTIONS: EnumDirections[] = [
 let gTransitionIndex: number = 0;
 let gImageIndex: number = 0;
 let gSlideCurrentDirectionIndex: EnumDirections = 0;
+let gLoader: PIXI.loaders.Loader;
 
 /**
  * Main scene class, for samples. Must have the name of the file to lazy load from configuration.
@@ -42,7 +33,7 @@ export class SpriteTransitionsSample extends PIXI.Container {
 
     protected _loadingText: PIXI.Text;
     protected _intervalHandler: number;
-    protected _transition: PIXI.EngineExtensions.IContainerTransition;
+    protected _transition: IContainerTransition;
 
     protected _currentSprite: PIXI.Sprite;
     protected _nextSprite: PIXI.Sprite;
@@ -54,9 +45,10 @@ export class SpriteTransitionsSample extends PIXI.Container {
         this._loadingText.anchor.x = 0.5;
         this._loadingText.x = pixiEngineInstance.renderer.width / 2;
 
-        // load all resources and initialize scene
-        PIXI.loader
-            .add(RESOURCE_PATHS.map((value: IKeyValueMap<string, string>) => { return value.value; }))
+        // create sample loader, load all resources and initialize scene
+        gLoader = new PIXI.loaders.Loader();
+        gLoader
+            .add(resourcePaths.map((value: IKeyValueMap<string, string>) => { return value.value; }))
             .load(() => this._init());
 
     }
@@ -66,9 +58,11 @@ export class SpriteTransitionsSample extends PIXI.Container {
         super.destroy(options);
         window.clearInterval(this._intervalHandler);
         if (this._transition) { this._transition.stop(); }
+
         gTransitionIndex = 0;
         gImageIndex = 0;
         gSlideCurrentDirectionIndex = 0;
+        gLoader.destroy();
     }
 
     private _init(): void {
@@ -128,12 +122,13 @@ export class SpriteTransitionsSample extends PIXI.Container {
 
     private _setNextSpriteTexture(sprite: PIXI.Sprite): PIXI.Sprite {
         // set new texture
-        gImageIndex = gImageIndex === 14 ? 1 : gImageIndex + 1;
-        let resource: IKeyValueMap<string, string> = RESOURCE_PATHS.find((value: IKeyValueMap<string, string>) => {
+        gImageIndex = gImageIndex === resourcePaths.length - 1 ? 1 : gImageIndex + 1;
+        let resource: IKeyValueMap<string, string> = resourcePaths.find((value: IKeyValueMap<string, string>) => {
             return value.key === `BG_SCENE_${gImageIndex}`; }) as IKeyValueMap<string, string>;
-        sprite.texture = PIXI.loader.resources[resource.value].texture;
+        sprite.texture = gLoader.resources[resource.value].texture;
         return sprite;
     }
+
 
     private _swapSprites(): void {
         this.swapChildren(this._currentSprite, this._nextSprite);

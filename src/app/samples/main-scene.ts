@@ -1,14 +1,16 @@
-import { IKeyValueMap } from "lightweight-pixi-engine";
-import { pixiEngineInstance } from "lightweight-pixi-engine";
+import { pixiEngineInstance, IKeyValueMap } from "lightweight-pixijs-engine";
+
+import { SceneTransitionsSample } from "./transitions/scene-transitions-sample";
+import { SpriteTransitionsSample } from "./transitions/sprite-transitions-sample";
 
 /**
  * main class for execute all samples
  */
-export class MainSamples extends PIXI.Container {
+export class MainScene extends PIXI.Container {
 
-    private readonly _samples: IKeyValueMap<string, string>[] = [
-        { key: "Scene Transitions", value: "app/samples/sceneTransitionsSample" },
-        { key: "Container Transitions", value: "app/samples/spriteTransitionsSample" }
+    private readonly _samples: IKeyValueMap<string, any>[] = [
+        { key: "Scene Transitions", value: SceneTransitionsSample },
+        { key: "Container Transitions", value: SpriteTransitionsSample }
     ];
 
     private _currentSample: PIXI.Container | undefined;
@@ -26,12 +28,12 @@ export class MainSamples extends PIXI.Container {
 
         // on added scene
         this.on("added", (_displayObject: PIXI.DisplayObject) => {
-            // release scenes and resources, this allows indefinite samples
+            // release scenes and resources
             if (this._currentSample) { pixiEngineInstance.sceneManager.destroyScene(this._currentSample); }
-            Object.keys(PIXI.utils.TextureCache).forEach((texture: string) => {
-                PIXI.utils.TextureCache[texture].destroy(true);
-            });
-            PIXI.loader.reset();
+            // Object.keys(PIXI.utils.TextureCache).forEach((texture: string) => {
+            //     PIXI.utils.TextureCache[texture].destroy(true);
+            // });
+            // PIXI.loader.reset();
         });
 
     }
@@ -79,15 +81,13 @@ export class MainSamples extends PIXI.Container {
 
     private _onMenuItemDown(_event: PIXI.interaction.InteractionEvent): void {
 
-        let sample: IKeyValueMap<string, string> = this._samples.find((value: IKeyValueMap<string, string>) => {
+        let sample: IKeyValueMap<string, any> = this._samples.find((value: IKeyValueMap<string, any>) => {
             return value.key === (_event.currentTarget as PIXI.Text).text;
-        }) as IKeyValueMap<string, string>;
+        }) as IKeyValueMap<string, any>;
 
         // load new scene and replace
-        pixiEngineInstance.sceneManager.loadAndCreateScene(sample.value).then((scene: PIXI.Container) => {
-            this._currentSample = scene;
-            pixiEngineInstance.sceneManager.replaceScene(this._currentSample);
-        });
+        this._currentSample = pixiEngineInstance.sceneManager.createScene(sample.key, sample.value) as PIXI.Container;
+        pixiEngineInstance.sceneManager.replaceScene(this._currentSample);
     }
 
 
