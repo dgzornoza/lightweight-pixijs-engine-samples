@@ -240,3 +240,4 @@ node_modules
 
 # published app
 .vscode/symbols.json
+dist/
