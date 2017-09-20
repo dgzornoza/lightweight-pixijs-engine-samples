@@ -1,0 +1,55 @@
+{
+    "name": "lightweight-pixijs-engine-samples",
+    "private": true,
+    "description": "Lightweight HTML5 engine based on pixi.js V4",
+    "version": "0.1.0",
+    "keywords": [
+        "pixijs",
+        "engine",
+        "lightweight",
+        "samples"
+    ],
+    "author": "David González Zornoza <dgzornoza@dgzornoza.com>",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/dgzornoza/lightweight-pixijs-engine-samples.git"
+    },
+    "bugs": {
+        "url": "https://github.com/dgzornoza/lightweight-pixijs-engine-samples/issues"
+    },
+    "scripts": {
+        "prestart": "npm install && npm run chrome",
+        "start": "http-server -a localhost -p 8000 -c-1 ./dist",
+        "watch": "cross-env NODE_ENV=development webpack --debug --watch --config ./src/config/webpack.config.js",
+        "build-debug": "cross-env NODE_ENV=development webpack --debug --config ./src/config/webpack.config.js",
+        "build-release": "cross-env NODE_ENV=production webpack --debug --config ./src/config/webpack.config.js",
+        "iexplore": "npm run build-debug && start iexplore http://localhost:8000/",
+        "chrome": "npm run build-debug && start chrome http://localhost:8000/",
+        "edge": "npm run build-debug && start edge http://localhost:8000/"
+    },
+    "devDependencies": {
+        "@types/es6-shim": "~0.31.32",
+        "@types/pixi.js": "~4.5.3",
+        "@types/webpack-env": "~1.13.0",
+        "awesome-typescript-loader": "~3.2.3",
+        "css-loader": "~0.28.6",
+        "cross-env": "~5.0.5",
+        "extract-text-webpack-plugin": "~3.0.0",
+        "file-loader": "~0.11.2",
+        "html-loader": "~0.5.1",
+        "http-server": "^0.9.0",
+        "html-webpack-plugin": "~2.30.1",
+        "style-loader": "~0.18.2",
+        "tslint": "^5.0.0",
+        "typescript": "~2.4.2",
+        "webpack": "~3.5.5"
+    },
+    "dependencies": {
+        "es6-shim": "~0.35.3",
+        "lightweight-pixijs-engine": "~0.3.1",
+        "pixi.js": "~4.5.5",
+        "fpsmeter": "~0.3.1",
+        "pixijs-charm": "~0.1.4"
+    }
+}
