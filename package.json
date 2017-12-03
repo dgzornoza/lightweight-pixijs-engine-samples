@@ -29,8 +29,10 @@
         "edge": "npm run build-debug && start edge http://localhost:8000/"
     },
     "devDependencies": {
-        "@types/es6-shim": "~0.31.32",
-        "@types/pixi.js": "~4.5.3",
+        "@types/es6-shim": "~0.31.35",
+        "@types/fpsmeter": "~0.3.29",
+        "@types/loglevel": "~1.5.3",
+        "@types/pixi.js": "~4.6.0",
         "@types/webpack-env": "~1.13.0",
         "awesome-typescript-loader": "~3.2.3",
         "css-loader": "~0.28.6",
@@ -47,9 +49,7 @@
     },
     "dependencies": {
         "es6-shim": "~0.35.3",
-        "lightweight-pixijs-engine": "~0.3.1",
-        "pixi.js": "~4.5.5",
-        "fpsmeter": "~0.3.1",
-        "pixijs-charm": "~0.1.4"
+        "lightweight-pixijs-engine": "~0.3.8",
+        "pixi.js": "~4.6.1"
     }
 }

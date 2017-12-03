@@ -1,4 +1,4 @@
-﻿import { pixiEngineInstance, IPixiEngineConfiguration } from "lightweight-pixijs-engine";
+﻿import { pixiEngineInstance, IPixiEngineConfiguration, EnumScaleMode } from "lightweight-pixijs-engine";
 import { MainScene } from "./samples/main-scene";
 
 import "../content/css/reset.css";
@@ -6,6 +6,9 @@ import "../content/css/reset.css";
 /** Interface for pixi main app */
 export interface IApp {
 }
+
+export const DESIGN_RESOLUTION_WIDTH: number = 1920;
+export const DESIGN_RESOLUTION_HEIGHT: number = 1280;
 
 /** Pixi main app */
 class App implements IApp {
@@ -39,9 +42,11 @@ class App implements IApp {
         let config: IPixiEngineConfiguration = {
             backgroundColor: 0x000000,
             debugMode: true,
-            height: 1280,
-            scaleToWindow: true,
-            width: 1920
+            height: DESIGN_RESOLUTION_HEIGHT,
+            resizeWithBrowserSize: true,
+            scaleMode: EnumScaleMode.SHOW_ALL,
+            view: document.getElementById("canvas-test") as HTMLCanvasElement,
+            width: DESIGN_RESOLUTION_WIDTH
         };
 
         pixiEngineInstance.initialize(config);

@@ -2,6 +2,7 @@ import { pixiEngineInstance, IKeyValueMap } from "lightweight-pixijs-engine";
 
 import { SceneTransitionsSample } from "./transitions/scene-transitions-sample";
 import { SpriteTransitionsSample } from "./transitions/sprite-transitions-sample";
+import { DESIGN_RESOLUTION_WIDTH } from "../app";
 
 /**
  * main class for execute all samples
@@ -56,7 +57,7 @@ export class MainScene extends PIXI.Container {
             strokeThickness: 5
         });
 
-        let centerX: number = pixiEngineInstance.renderer.width / 2;
+        let centerX: number = DESIGN_RESOLUTION_WIDTH / 2;
 
         for (let index: number = 0; index < this._samples.length; index++) {
             let menuItem: PIXI.Text = new PIXI.Text(this._samples[index].key, style);
