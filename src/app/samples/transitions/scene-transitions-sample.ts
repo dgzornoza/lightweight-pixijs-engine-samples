@@ -1,17 +1,13 @@
 import {
-    IKeyValueMap, EnumDirections, ContainerTransitionSlide, ContainerTransitionFadeIn, ContainerTransitionFadeOut, pixiEngineInstance,
-    IContainerTransition
+    IKeyValueMap, EnumDirections, pixiEngineInstance,
+    ITransition, TransitionSlide, TransitionFadeOut, TransitionFadeIn
 } from "lightweight-pixijs-engine";
 
-// load images with webpack
-let requireContext: __WebpackModuleApi.RequireContext = require.context("../../../content/img/scene-transitions/", true, /^\.\/.*\.jpg$/);
-/* tslint:disable no-require-imports */
-let resourcePaths: IKeyValueMap<string, string>[] = requireContext.keys().map((value: string, index: number) => {
-    return { key: `BG_SCENE_${index}`, value: `assets/src/content/img/scene-transitions/${value}` };
-});
-/* tslint:enable no-require-imports */
+
+let resourcePaths: IKeyValueMap<string, string>[];
 
 const SLIDE_DIRECTIONS: EnumDirections[] = [
+    EnumDirections.NONE,
     EnumDirections.UP,
     EnumDirections.DOWN,
     EnumDirections.LEFT,
@@ -22,7 +18,7 @@ const SLIDE_DIRECTIONS: EnumDirections[] = [
     EnumDirections.UP + EnumDirections.RIGHT
 ];
 
-let gTransitionIndex: number = 0;
+let gTransitionIndex: number = 1;
 let gImageIndex: number = 0;
 let gSlideCurrentDirectionIndex: EnumDirections = 0;
 let gLoader: PIXI.loaders.Loader;
@@ -36,6 +32,13 @@ export class SceneTransitionsSample extends PIXI.Container {
 
     constructor() {
         super();
+
+        // load images with webpack
+        let requireContext: __WebpackModuleApi.RequireContext = require.context("../../../content/img/scene-transitions/", true, /^\.\/.*\.jpg$/);
+        resourcePaths = requireContext.keys().map((value: string) => {
+            let index: string = /-(\w+).\w+$/.exec(value)![1];
+            return { key: `BG_SCENE_${index}`, value: `assets/src/content/img/scene-transitions/bg-scene-${index}.jpg` };
+        });
 
         this._loadingText = new PIXI.Text("Loading...", { fontSize: 72 });
         this._loadingText.anchor.x = 0.5;
@@ -75,7 +78,7 @@ abstract class SceneTransitionSampleBase extends PIXI.Container {
 
     protected _background: PIXI.Sprite;
     protected _timeoutHandler: number;
-    protected _transition: IContainerTransition;
+    protected _transition: ITransition;
 
     constructor() {
         super();
@@ -115,19 +118,19 @@ abstract class SceneTransitionSampleBase extends PIXI.Container {
             // replace scene with transition
             switch (gTransitionIndex) {
                 case 0:
-                    this._transition = new ContainerTransitionSlide(pixiEngineInstance.sceneManager.currentScene, scene,
+                    this._transition = new TransitionSlide(pixiEngineInstance.sceneManager.currentScene, scene,
                         SLIDE_DIRECTIONS[gSlideCurrentDirectionIndex]);
                     break;
                 case 1:
-                    this._transition = new ContainerTransitionFadeIn(pixiEngineInstance.sceneManager.currentScene, scene,
+                    this._transition = new TransitionFadeIn(pixiEngineInstance.sceneManager.currentScene, scene,
                         SLIDE_DIRECTIONS[gSlideCurrentDirectionIndex]);
                     break;
                 case 2:
-                    this._transition = new ContainerTransitionFadeOut(pixiEngineInstance.sceneManager.currentScene, scene,
+                    this._transition = new TransitionFadeOut(pixiEngineInstance.sceneManager.currentScene, scene,
                         SLIDE_DIRECTIONS[gSlideCurrentDirectionIndex]);
                     break;
                 default:
-                    this._transition = new ContainerTransitionSlide(pixiEngineInstance.sceneManager.currentScene, scene,
+                    this._transition = new TransitionSlide(pixiEngineInstance.sceneManager.currentScene, scene,
                         SLIDE_DIRECTIONS[gSlideCurrentDirectionIndex]);
             }
 

@@ -8,7 +8,7 @@ export interface IApp {
 }
 
 export const DESIGN_RESOLUTION_WIDTH: number = 1920;
-export const DESIGN_RESOLUTION_HEIGHT: number = 1280;
+export const DESIGN_RESOLUTION_HEIGHT: number = 1080;
 
 /** Pixi main app */
 class App implements IApp {
@@ -42,6 +42,7 @@ class App implements IApp {
         let config: IPixiEngineConfiguration = {
             backgroundColor: 0x000000,
             debugMode: true,
+            forceCanvas: true,
             height: DESIGN_RESOLUTION_HEIGHT,
             resizeWithBrowserSize: true,
             scaleMode: EnumScaleMode.SHOW_ALL,

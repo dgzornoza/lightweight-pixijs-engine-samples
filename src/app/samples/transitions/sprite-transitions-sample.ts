@@ -1,16 +1,15 @@
-import { EnumDirections, ContainerTransitionSlide, ContainerTransitionFadeIn, ContainerTransitionFadeOut, IContainerTransition, IKeyValueMap,
-    pixiEngineInstance }
+import { EnumDirections, IKeyValueMap,
+    pixiEngineInstance,
+    ITransition,
+    TransitionSlide,
+    TransitionFadeIn,
+    TransitionFadeOut}
     from "lightweight-pixijs-engine";
 
-// load images with webpack
-let requireContext: __WebpackModuleApi.RequireContext = require.context("../../../content/img/scene-transitions/", true, /^\.\/.*\.jpg$/);
-/* tslint:disable no-require-imports */
-let resourcePaths: IKeyValueMap<string, string>[] = requireContext.keys().map((value: string, index: number) => {
-    return { key: `BG_SCENE_${index}`, value: `assets/src/content/img/scene-transitions/${value}` };
-});
-/* tslint:enable no-require-imports */
+let resourcePaths: IKeyValueMap<string, string>[];
 
 const SLIDE_DIRECTIONS: EnumDirections[] = [
+    EnumDirections.NONE,
     EnumDirections.UP,
     EnumDirections.DOWN,
     EnumDirections.LEFT,
@@ -21,7 +20,7 @@ const SLIDE_DIRECTIONS: EnumDirections[] = [
     EnumDirections.UP + EnumDirections.RIGHT
 ];
 
-let gTransitionIndex: number = 0;
+let gTransitionIndex: number = 2;
 let gImageIndex: number = 0;
 let gSlideCurrentDirectionIndex: EnumDirections = 0;
 let gLoader: PIXI.loaders.Loader;
@@ -33,13 +32,20 @@ export class SpriteTransitionsSample extends PIXI.Container {
 
     protected _loadingText: PIXI.Text;
     protected _intervalHandler: number;
-    protected _transition: IContainerTransition;
+    protected _transition: ITransition;
 
     protected _currentSprite: PIXI.Sprite;
     protected _nextSprite: PIXI.Sprite;
 
     constructor() {
         super();
+
+        // load images with webpack
+        let requireContext: __WebpackModuleApi.RequireContext = require.context("../../../content/img/scene-transitions/", true, /^\.\/.*\.jpg$/);
+        resourcePaths = requireContext.keys().map((value: string) => {
+            let index: string = /-(\w+).\w+$/.exec(value)![1];
+            return { key: `BG_SCENE_${index}`, value: `assets/src/content/img/scene-transitions/bg-scene-${index}.jpg` };
+        });
 
         this._loadingText = new PIXI.Text("Loading...", { fontSize: 72 });
         this._loadingText.anchor.x = 0.5;
@@ -88,16 +94,16 @@ export class SpriteTransitionsSample extends PIXI.Container {
 
             switch (gTransitionIndex) {
                 case 0:
-                    this._transition = new ContainerTransitionSlide(this._currentSprite, this._nextSprite, SLIDE_DIRECTIONS[gSlideCurrentDirectionIndex]);
+                    this._transition = new TransitionSlide(this._currentSprite, this._nextSprite, SLIDE_DIRECTIONS[gSlideCurrentDirectionIndex]);
                     break;
                 case 1:
-                    this._transition = new ContainerTransitionFadeIn(this._currentSprite, this._nextSprite, SLIDE_DIRECTIONS[gSlideCurrentDirectionIndex]);
+                    this._transition = new TransitionFadeIn(this._currentSprite, this._nextSprite, SLIDE_DIRECTIONS[gSlideCurrentDirectionIndex]);
                     break;
                 case 2:
-                    this._transition = new ContainerTransitionFadeOut(this._currentSprite, this._nextSprite, SLIDE_DIRECTIONS[gSlideCurrentDirectionIndex]);
+                    this._transition = new TransitionFadeOut(this._currentSprite, this._nextSprite, SLIDE_DIRECTIONS[gSlideCurrentDirectionIndex]);
                     break;
                 default:
-                    this._transition = new ContainerTransitionSlide(this._currentSprite, this._nextSprite, SLIDE_DIRECTIONS[gSlideCurrentDirectionIndex]);
+                    this._transition = new TransitionSlide(this._currentSprite, this._nextSprite, SLIDE_DIRECTIONS[gSlideCurrentDirectionIndex]);
             }
 
             // visible next sprite for start transition
