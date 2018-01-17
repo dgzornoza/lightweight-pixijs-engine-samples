@@ -18,7 +18,7 @@ const SLIDE_DIRECTIONS: EnumDirections[] = [
     EnumDirections.UP + EnumDirections.RIGHT
 ];
 
-let gTransitionIndex: number = 1;
+let gTransitionIndex: number = 0;
 let gImageIndex: number = 0;
 let gSlideCurrentDirectionIndex: EnumDirections = 0;
 let gLoader: PIXI.loaders.Loader;

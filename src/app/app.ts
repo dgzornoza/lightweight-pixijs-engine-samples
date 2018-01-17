@@ -45,7 +45,7 @@ class App implements IApp {
             forceCanvas: true,
             height: DESIGN_RESOLUTION_HEIGHT,
             resizeWithBrowserSize: true,
-            scaleMode: EnumScaleMode.SHOW_ALL,
+            scaleMode: EnumScaleMode.NO_BORDER,
             view: document.getElementById("canvas-test") as HTMLCanvasElement,
             width: DESIGN_RESOLUTION_WIDTH
         };
